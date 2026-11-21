@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <meta name="theme-color" content="#080D1C">
+  <meta name="description" content="A world made just for you. Happy Birthday, Bocil.">
+  <title>The Grand Birthday Experience — A World Made For You</title>
+
+  <!-- Google Fonts Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Great+Vibes&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/animations.css">
+  <link rel="stylesheet" href="./css/responsive.css">
+</head>
+<body>
+
+  <!-- Background Canvas for Particles, Stars, Meteors & Petals -->
+  <canvas id="universeCanvas"></canvas>
+
+  <!-- Ambient Aurora & Nebula Backdrop -->
+  <div class="aurora-backdrop" aria-hidden="true"></div>
+
+  <!-- Preloader Screen -->
+  <div class="preloader" id="preloader">
+    <div class="preloader-star">✦</div>
+    <div class="preloader-text">Creating Your Little Universe...</div>
+  </div>
+
+  <!-- Floating Cinematic Header -->
+  <header class="app-header">
+    <div class="app-brand">
+      <span class="brand-icon">✦</span>
+      <span class="brand-title">A Little Universe</span>
+    </div>
+
+    <div class="header-controls">
+      <!-- Music Control Button -->
+      <button class="music-toggle-btn" id="musicToggleBtn" aria-label="Putar Musik">
+        <div class="music-visualizer" id="musicVisualizer">
+          <span class="visualizer-bar bar-1"></span>
+          <span class="visualizer-bar bar-2"></span>
+          <span class="visualizer-bar bar-3"></span>
+        </div>
+        <span id="musicToggleLabel">Music: Off</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Side Navigation Dots (Scenes 1 - 8) -->
+  <nav class="nav-dots-container" aria-label="Navigasi Adegan">
+    <button class="nav-dot active" data-scene="1" aria-label="Scene 1: The Invitation"></button>
+    <button class="nav-dot" data-scene="2" aria-label="Scene 2: A Little Universe"></button>
+    <button class="nav-dot" data-scene="3" aria-label="Scene 3: The Little Things"></button>
+    <button class="nav-dot" data-scene="4" aria-label="Scene 4: A Letter from Abg"></button>
+    <button class="nav-dot" data-scene="5" aria-label="Scene 5: Wishes"></button>
+    <button class="nav-dot" data-scene="6" aria-label="Scene 6: Make a Wish"></button>
+    <button class="nav-dot" data-scene="7" aria-label="Scene 7: The Gift"></button>
+    <button class="nav-dot" data-scene="8" aria-label="Scene 8: The Final Moment"></button>
+  </nav>
+
+  <!-- Fullscreen Transition Light Veil -->
+  <div class="transition-overlay" id="transitionOverlay" aria-hidden="true"></div>
+
+  <!-- Scenes Wrapper -->
+  <main class="scenes-wrapper">
+
+    <!-- ===================================================================
+         SCENE 01 — THE INVITATION
+         =================================================================== -->
+    <section class="scene scene-invitation active" id="scene-1">
+      <div class="invitation-container">
+        <div class="invitation-moon" aria-hidden="true"></div>
+        <span class="section-eyebrow">An Exclusive Journey</span>
+        <h1 class="invitation-line-1">
+          Somewhere in this universe,<br>
+          there is someone worth celebrating.
+        </h1>
+        <p class="invitation-line-2">
+          And today, that someone is <span class="gold-gradient-text cfg-recipient-name">you</span>.
+        </p>
+        <button class="btn-primary" id="btnOpenSurprise">
+          <span>Open your little surprise</span>
+          <span class="btn-arrow">✨</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         SCENE 02 — A LITTLE UNIVERSE
+         =================================================================== -->
+    <section class="scene scene-universe" id="scene-2">
+      <div class="universe-stage">
+        <div class="luminous-moon-halo" aria-hidden="true"></div>
+        <span class="section-eyebrow">A Little Universe Just For You</span>
+        <div class="universe-greeting">Happy Birthday</div>
+        <h2 class="recipient-hero-name gold-gradient-text cfg-recipient-name">Bocil</h2>
+        <p class="universe-celebrate-text">Today, the universe celebrates you.</p>
+        <div class="date-pill">
+          <span>✦</span>
+          <span class="cfg-birthdate">Today & Always</span>
+          <span>✦</span>
+        </div>
+        <button class="btn-primary" id="btnEnterUniverse">
+          <span>Step into the warmth</span>
+          <span>→</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         SCENE 03 — THE LITTLE THINGS (Hopes)
+         =================================================================== -->
+    <section class="scene scene-hopes" id="scene-3">
+      <span class="section-eyebrow">The Little Things</span>
+      <h2 class="scene-title">Things I Hope for You</h2>
+      <p class="scene-subtitle">Doa-doa kecil yang diam-diam selalu abg bisikkan untukmu</p>
+
+      <div class="hopes-grid" id="hopesContainer">
+        <!-- Rendered dynamically by scene.js from config -->
+      </div>
+
+      <button class="btn-primary" id="btnProceedToLetter">
+        <span>Open a special letter for you</span>
+        <span>✉</span>
+      </button>
+    </section>
+
+    <!-- ===================================================================
+         SCENE 04 — A LETTER FROM ABG
+         =================================================================== -->
+    <section class="scene scene-letter" id="scene-4">
+      <span class="section-eyebrow">Personal Letter</span>
+      <h2 class="scene-title">Something I wanted to tell you.</h2>
+
+      <div class="envelope-wrapper" id="envelopeWrapper">
+        <!-- Digital Envelope (Closed State) -->
+        <div class="envelope-container" id="letterEnvelope" role="button" tabindex="0" aria-label="Buka Surat">
+          <div class="wax-seal" id="waxSeal">✦</div>
+          <div class="envelope-tap-prompt">Sentuh untuk membuka surat</div>
+          <div class="envelope-sub-prompt">Sebuah pesan tulus dari <span class="cfg-sender-name">Abg</span></div>
+        </div>
+
+        <!-- Digital Letter Paper (Open State) -->
+        <article class="letter-paper" id="letterPaper">
+          <div class="letter-header">
+            <h3 class="letter-greeting-title">Selamat ulang tahun ya, <span class="cfg-recipient-name">bocil</span>.</h3>
+            <span class="letter-date cfg-birthdate">Special Day</span>
+          </div>
+          <div class="letter-body" id="letterBodyText">
+            <!-- Sequentially typed / revealed paragraphs -->
+          </div>
+          <div class="letter-signature-area">
+            <div class="letter-signature cfg-sender-name">— Abg</div>
+          </div>
+        </article>
+      </div>
+
+      <button class="btn-primary" id="btnOpenLetter">
+        <span>Read my little letter</span>
+      </button>
+
+      <div class="letter-actions" id="letterAfterActions">
+        <button class="btn-secondary" id="btnSkipTyping">Baca Langsung</button>
+        <button class="btn-primary" id="btnProceedToWishes">
+          <span>Before Your Wishes Come True</span>
+          <span>→</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         SCENE 05 — WISHES FOR YOUR NEW AGE
+         =================================================================== -->
+    <section class="scene scene-wishes" id="scene-5">
+      <span class="section-eyebrow">Five Sacred Stars</span>
+      <h2 class="scene-title">Before Your Wishes Come True</h2>
+      <p class="scene-subtitle">Sentuh setiap bintang harapan untuk membuka pesannya</p>
+
+      <div class="wishes-container" id="wishesContainer">
+        <!-- Populated dynamically by scene.js from config -->
+      </div>
+
+      <button class="btn-primary" id="btnProceedToSky">
+        <span>Make a wish to the sky</span>
+        <span>✨</span>
+      </button>
+    </section>
+
+    <!-- ===================================================================
+         SCENE 06 — A SKY FULL OF WISHES
+         =================================================================== -->
+    <section class="scene scene-sky-wishes" id="scene-6">
+      <div class="sky-wishes-stage">
+        <div class="constellation-orb">
+          <span class="constellation-star">⋆</span>
+        </div>
+        <span class="section-eyebrow">The Wishing Star</span>
+        <h2 class="scene-title">Close your eyes & make a wish</h2>
+        <p class="scene-subtitle">Langit malam ini siap mendengarkan apa pun yang kamu bisikkan dalam hati</p>
+
+        <button class="btn-primary" id="btnMakeWish" style="margin-top: 32px;">
+          <span>Make a wish</span>
+          <span>✦</span>
+        </button>
+
+        <div class="wish-result-area" id="wishResultArea">
+          <p class="wish-result-quote">
+            "Whatever your wish is,<br>
+            I hope life finds a beautiful way to make it happen."
+          </p>
+          <p class="wish-result-note">Keep that little wish close to your heart.</p>
+          <button class="btn-primary" id="btnProceedToGift">
+            <span>Open your little gift</span>
+            <span>🎁</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         SCENE 07 — THE GIFT
+         =================================================================== -->
+    <section class="scene scene-gift" id="scene-7">
+      <div class="gift-stage">
+        <span class="section-eyebrow">A Little Token</span>
+        <h2 class="scene-title">I have one more little thing for you.</h2>
+        <p class="scene-subtitle">Sebuah kotak kecil yang menyimpan sesuatu yang berharga</p>
+
+        <!-- 3D Luxury Gift Box -->
+        <div class="gift-box-3d" id="giftBox" role="button" tabindex="0" aria-label="Buka Kotak Hadiah">
+          <div class="gift-bow"></div>
+          <div class="gift-box-lid">
+            <div class="gift-ribbon-vertical"></div>
+          </div>
+          <div class="gift-box-base">
+            <div class="gift-ribbon-vertical"></div>
+            <div class="gift-ribbon-horizontal"></div>
+          </div>
+        </div>
+
+        <button class="btn-primary" id="btnUnwrapGift">
+          <span>Unwrap your gift</span>
+        </button>
+
+        <div class="gift-reveal-content" id="giftRevealContent">
+          <h3 class="gift-reveal-headline">"Your existence is already a beautiful gift to this world."</h3>
+          <p class="gift-reveal-subtext">Never forget how precious you are.</p>
+          <button class="btn-primary" id="btnProceedToFinale">
+            <span>Enter the final moment</span>
+            <span>✨</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         SCENE 08 — THE FINAL MOMENT
+         =================================================================== -->
+    <section class="scene scene-finale" id="scene-8">
+      <div class="finale-stage">
+        <div class="finale-moon" aria-hidden="true"></div>
+        <h2 class="finale-title gold-gradient-text">Happy Birthday, <span class="cfg-recipient-name">Bocil</span>.</h2>
+
+        <div class="finale-prayers-box">
+          <p class="finale-prayer-line">Semoga panjang umur.</p>
+          <p class="finale-prayer-line">Semoga bahagia.</p>
+          <p class="finale-prayer-line">Semoga semua hal baik menemukan jalan menuju kamu.</p>
+        </div>
+
+        <p class="finale-quote">
+          "Stay happy, little one.<br>
+          The world is a little more beautiful with you in it."
+        </p>
+
+        <div class="finale-signature-box">
+          <span class="finale-signature-label">With a little affection,</span>
+          <span class="finale-signature-name cfg-sender-name">Abg.</span>
+        </div>
+
+        <button class="btn-primary" id="btnReplayUniverse">
+          <span>Replay your little universe</span>
+          <span>↺</span>
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Wish Detail Interactive Modal -->
+  <div class="modal-backdrop" id="wishDetailModal" role="dialog" aria-modal="true" aria-labelledby="modalWishTitle">
+    <div class="modal-card">
+      <div class="modal-icon" id="modalWishIcon">✦</div>
+      <h3 class="modal-title" id="modalWishTitle">Wish Title</h3>
+      <p class="modal-desc" id="modalWishDesc">Wish description text goes here.</p>
+      <p class="modal-detail" id="modalWishDetail">Wish deeper detail goes here.</p>
+      <button class="btn-secondary" id="closeWishModal">Tutup Pesan</button>
+    </div>
+  </div>
+
+  <!-- Application Scripts -->
+  <script src="./js/config.js"></script>
+  <script src="./js/audio.js"></script>
+  <script src="./js/particles.js"></script>
+  <script src="./js/scene.js"></script>
+  <script src="./js/main.js"></script>
+</body>
+</html>
